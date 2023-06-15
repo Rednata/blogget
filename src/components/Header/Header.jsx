@@ -16,7 +16,7 @@ export const Header = () => {
           <Heading text="заголовок"></Heading>
           <Auth auth=''/>
         </div>        
-      </Layout>
+      </Layout>            
     </header>
   )  
 }
