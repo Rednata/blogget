@@ -6,17 +6,15 @@ import Auth from './Auth';
 import Search from './Search';
 import Heading from './Heading';
 
-export const Header = () => {
-  return (
-    <header className={style.header}>
-      <Layout>
-        <div className={style.gridContainer}>
-          <Logo/>
-          <Search/>            
-          <Heading text="заголовок"></Heading>
-          <Auth auth=''/>
-        </div>        
-      </Layout>            
-    </header>
-  )  
-}
+export const Header = () => (
+  <header className={style.header}>
+    <Layout>
+      <div className={style.gridContainer}>
+        <Logo/>
+        <Search/>
+        <Heading text="заголовок"></Heading>
+        <Auth auth=''/>
+      </div>
+    </Layout>
+  </header>
+);

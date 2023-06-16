@@ -5,7 +5,7 @@ import {Main} from './components/Main/Main';
 function App() {
   return (
     <React.Fragment>
-      <Header />  
+      <Header />
       <Main />
     </React.Fragment>
 
