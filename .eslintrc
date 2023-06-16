@@ -264,12 +264,7 @@
         "allowTemplateLiterals": true
       }
     ],
-    "require-jsdoc": [
-      "error",
-      {
-        "require": "false"
-      }
-    ],
+    "require-jsdoc": 0,
     "semi": "error",
     "semi-spacing": "error",
     "space-before-blocks": "error",
