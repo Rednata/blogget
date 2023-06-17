@@ -14,6 +14,7 @@
     "sourceType": "module"
   },
   "rules": {
+    "react/react-in-jsx-scope": "off",
     "no-console": "off",
     "no-loop-func": [
       "error"
@@ -264,12 +265,7 @@
         "allowTemplateLiterals": true
       }
     ],
-    "require-jsdoc": [
-      "error",
-      {
-        "require": "false"
-      }
-    ],
+    "require-jsdoc": 0,
     "semi": "error",
     "semi-spacing": "error",
     "space-before-blocks": "error",
