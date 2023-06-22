@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {useEffect, useState} from 'react';
 import {assignID} from '../../../utils/generateRandomID';
 import {debounceRaf} from '../../../utils/debounce';
+import {Text} from '../../../UI/Text';
 
 import {ReactComponent as ArrowIcon} from './img/arrow.svg';
 import {ReactComponent as HomeIcon} from './img/home.svg';
@@ -29,10 +30,10 @@ export const Tabs = () => {
 
   const handleResize = () => {
     if (document.documentElement.clientWidth < 768) {
-      console.log('<768');
+      // console.log('<768');
       setIsDropDown(true);
     } else {
-      console.log('>=768');
+      // console.log('>=768');
       setIsDropDown(false);
     }
   };
@@ -62,13 +63,13 @@ export const Tabs = () => {
             setIsDropdownOpen(false)}>
             {
               LIST.map(({value, id, Icon}) =>
-                (<li className={style.item} key={id}>
+                (<Text As='li' className={style.item} key={id}>
                   <button
                     className={style.btn}
                     onClick={() => onClickTabsBtn(value)}>{value}
                     {Icon && <Icon width={30} height={30} />}
                   </button>
-                </li>))
+                </Text>))
             }
           </ul>
       }
