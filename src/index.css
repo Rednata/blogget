@@ -49,6 +49,8 @@
   --greyBF: hsl(0, 0%, 75%);
   --grey99: hsl(0, 0%, 60%);
   --grey66: hsl(0, 0%, 40%);
+  --grey2D: #2d2d2d;  
+  --grey8F: #8f8f8f;
 }
 
 html {
