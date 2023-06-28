@@ -7,7 +7,8 @@ export const Content = ({title, author}) => (
     <Text As='h2' className={style.title}>
       <Text As='a'
         className={style.linkPost}
-        color='grey2D'
+        // color='grey2D'
+        color='green'
         size={18}
         tsize={26}
         dsize={32}
