@@ -3,6 +3,7 @@ import style from './Text.module.css';
 import PropTypes from 'prop-types';
 
 export const Text = prop => {
+  // console.log(prop);
   const {
     As = 'span',
     color = 'black',
@@ -15,17 +16,20 @@ export const Text = prop => {
     center,
     fweight,
   } = prop;
-
+  // console.warn(`fs${size}`);
+  // console.log({[style[`fs${size}`]]: size});
+  // {[style[`fs${size}`]]: size},
   const classes = classNames(
       className,
       style[color],
       center,
       {[style[`${fweight}`]]: fweight},
       {[style.center]: center},
-      {[style[`fs${size}`]]: size},
+      style[`fs${size}`],
       {[style[`fst${tsize}`]]: tsize},
       {[style[`fsd${dsize}`]]: dsize},
   );
+  // console.log(classes);
   return (
     <As className={classes} href={href}>{children}</As>
   );
