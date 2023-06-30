@@ -9,30 +9,26 @@ import {useAuth} from '../../../hooks/useAuth';
 export const Auth = ({token, delToken}) => {
   const [logoutBtn, setLogoutBtn] = useState(false);
 
-  const auth = useAuth(token);
+  const [auth, setAuth] = useAuth(token, delToken);
 
-  const handleClickLogout = () => {
+  const handleClickAuthBtn = () => {
     if (!logoutBtn) {
       setLogoutBtn(true);
     } else {
       setLogoutBtn(false);
     }
   };
-  // const clickLogout = () => {
-  //   if (!logout) {
-  //     setLogout(true);
-  //   } else {
-  //     delToken();
-  //     setAuth({});
-  //     // setLogout(false);
-  //   }
-  // };
+
+  const handleClickLogoutBtn = () => {
+    delToken();
+    setAuth({});
+  };
 
   return (
     <div className={style.container}>
       {auth.name ? (
         <>
-          <button className={style.btn} onClick={handleClickLogout}>
+          <button className={style.btn} onClick={handleClickAuthBtn}>
             <img
               className={style.img}
               src={auth.img}
@@ -41,8 +37,9 @@ export const Auth = ({token, delToken}) => {
           </button>
           {
             logoutBtn &&
-            <button className={style.logout}
-              onClick={handleClickLogout}>Выйти</button>
+            <button
+              className={style.logout}
+              onClick={handleClickLogoutBtn}>Выйти</button>
           }
         </>
         ) : (
@@ -50,7 +47,6 @@ export const Auth = ({token, delToken}) => {
         <LoginIcon width={25} height={25} color='#cc6633'/>
       </Text>
       )
-        // <img className={style.svg} src={loginImg} alt="Авторизация" />
       }
     </div>
   );

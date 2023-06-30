@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 import {URL_API} from '../api/const';
 
-export const useAuth = (token) => {
+export const useAuth = (token, delToken) => {
   const [auth, setAuth] = useState('');
 
   useEffect(() => {
@@ -12,15 +12,20 @@ export const useAuth = (token) => {
         Authorization: `bearer ${token}`,
       },
     })
-        .then(response => response.json())
+        .then(response => {
+          if (response.status === 401) {
+            delToken();
+            setAuth({});
+          } else return response.json();
+        })
         .then(({name, icon_img: iconImg}) => {
           const img = iconImg.replace(/\?.*$/, '');
           setAuth({name, img});
         })
         .catch(err => {
-          console.err(err);
+          // console.err(err);
           setAuth({});
         });
   }, [token]);
-  return auth;
+  return [auth, setAuth];
 };
