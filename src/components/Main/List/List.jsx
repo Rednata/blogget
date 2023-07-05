@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {postContext} from '../../../context/postContext';
 import style from './List.module.css';
 import Post from './Post';
-import {generateRandomID} from '../../../utils/generateRandomID';
+// import {generateRandomID} from '../../../utils/generateRandomID';
+// import {useBestPosts} from '../../../hooks/useBestPosts';
 
 // const LIST = [
 //   {
@@ -35,7 +37,12 @@ import {generateRandomID} from '../../../utils/generateRandomID';
 // ];
 
 export const List = props => {
-  generateRandomID();
+  // generateRandomID();
+
+  const [bestPosts] = useContext(postContext);
+
+  console.log(bestPosts);
+
   const postsData = [
     {
       thumbnail: '',
