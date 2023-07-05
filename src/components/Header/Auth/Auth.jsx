@@ -1,34 +1,34 @@
-import {useState} from 'react';
+import {useState, useContext} from 'react';
 import style from './Auth.module.css';
 import PropTypes from 'prop-types';
 import {urlAuth} from '../../../api/auth';
 import {Text} from '../../../UI/Text';
 import {ReactComponent as LoginIcon} from './img/login.svg';
-import {useAuth} from '../../../hooks/useAuth';
+// import {useAuth} from '../../../hooks/useAuth';
+import {tokenContext} from '../../../context/tokenContext';
+import {authContext} from '../../../context/authContext';
 
-export const Auth = ({token, delToken}) => {
-  const [logoutBtn, setLogoutBtn] = useState(false);
+export const Auth = () => {
+  const {delToken} = useContext(tokenContext);
+  const [showLogout, setShowLogout] = useState(false);
 
-  const [auth, setAuth] = useAuth(token, delToken);
+  // const [auth, clearAuth] = useAuth();
+  const {auth, clearAuth} = useContext(authContext);
 
-  const handleClickAuthBtn = () => {
-    if (!logoutBtn) {
-      setLogoutBtn(true);
-    } else {
-      setLogoutBtn(false);
-    }
+  const getOut = () => {
+    setShowLogout(!showLogout);
   };
 
-  const handleClickLogoutBtn = () => {
+  const logOut = () => {
     delToken();
-    setAuth({});
+    clearAuth();
   };
 
   return (
     <div className={style.container}>
       {auth.name ? (
         <>
-          <button className={style.btn} onClick={handleClickAuthBtn}>
+          <button className={style.btn} onClick={getOut}>
             <img
               className={style.img}
               src={auth.img}
@@ -36,10 +36,10 @@ export const Auth = ({token, delToken}) => {
               alt={`Аватар ${auth.name}`} />
           </button>
           {
-            logoutBtn &&
+            showLogout &&
             <button
               className={style.logout}
-              onClick={handleClickLogoutBtn}>Выйти</button>
+              onClick={logOut}>Выйти</button>
           }
         </>
         ) : (
