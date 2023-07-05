@@ -15,10 +15,7 @@ export const useBestPosts = () => {
       },
     })
         .then(response => response.json())
-        .then(data => {
-          console.log('0000');
-          return setBestPosts(data.data.children);
-        });
+        .then(data => setBestPosts(data.data.children));
   }, [token]);
   return [bestPosts];
 };
