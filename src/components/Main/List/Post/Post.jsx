@@ -12,7 +12,7 @@ export const Post = ({data}) => {
     author,
     thumbnail,
     created: date} = data;
-  console.log(data);
+
   return (
     <li className={style.post}>
       <Thumbnail

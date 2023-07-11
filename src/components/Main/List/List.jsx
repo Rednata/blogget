@@ -41,8 +41,6 @@ export const List = props => {
   // generateRandomID();
   const [bestPosts] = useContext(postContext);
 
-  console.log(bestPosts);
-
   return (
     <ul className={style.list}>
       {
