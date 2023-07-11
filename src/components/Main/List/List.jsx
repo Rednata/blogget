@@ -2,6 +2,7 @@ import React, {useContext} from 'react';
 import {postContext} from '../../../context/postContext';
 import style from './List.module.css';
 import Post from './Post';
+import Loader from './Loader';
 // import {generateRandomID} from '../../../utils/generateRandomID';
 // import {useBestPosts} from '../../../hooks/useBestPosts';
 
@@ -40,14 +41,14 @@ export const List = props => {
   // generateRandomID();
   const [bestPosts] = useContext(postContext);
 
-  if (Array.isArray(bestPosts)) {
-    return (
-      <ul className={style.list}>
-        {
+  return (
+    <ul className={style.list}>
+      {
+        bestPosts ?
           bestPosts.map(({data}) =>
-            <Post key={data.id} data={data} />)
-        }
-      </ul>
-    );
-  }
+            <Post key={data.id} data={data} />) :
+        <Loader />
+      }
+    </ul>
+  );
 };

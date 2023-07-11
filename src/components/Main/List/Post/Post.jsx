@@ -7,10 +7,17 @@ import {DeleteBtn} from './DeleteBtn/DeleteBtn';
 import {Thumbnail} from './Thumbnail/Thumbnail';
 
 export const Post = ({data}) => {
-  const {title, author, thumbnail, created: date} = data;
+  const {
+    title,
+    author,
+    thumbnail,
+    created: date} = data;
+
   return (
     <li className={style.post}>
-      <Thumbnail thumbnail={thumbnail} title={title}/>
+      <Thumbnail
+        thumbnail={thumbnail}
+        title={title}/>
       <DeleteBtn />
       <Content author={author} title={title} />
       {/* <Rating ups={ups}/> */}

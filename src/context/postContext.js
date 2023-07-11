@@ -6,6 +6,7 @@ export const postContext = React.createContext([]);
 
 export const PostContextProvider = ({children}) => {
   const [bestPosts] = useBestPosts();
+
   return (
     <postContext.Provider value={[bestPosts]}>
       {children}
