@@ -1,6 +1,6 @@
 import style from './Post.module.css';
 import PropTypes from 'prop-types';
-// import Rating from './Rating';
+import Rating from './Rating';
 import Time from './Time';
 import Content from './Content';
 import {DeleteBtn} from './DeleteBtn/DeleteBtn';
@@ -10,6 +10,7 @@ export const Post = ({data}) => {
   const {
     title,
     author,
+    ups,
     thumbnail,
     created: date} = data;
 
@@ -20,7 +21,7 @@ export const Post = ({data}) => {
         title={title}/>
       <DeleteBtn />
       <Content author={author} title={title} />
-      {/* <Rating ups={ups}/> */}
+      <Rating ups={ups}/>
       <Time date={date} />
     </li>);
 };
