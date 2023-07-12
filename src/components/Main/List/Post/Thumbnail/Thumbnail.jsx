@@ -3,8 +3,7 @@ import notphoto from '../img/notphoto.jpg';
 import PropTypes from 'prop-types';
 
 export const Thumbnail = ({thumbnail, title}) => {
-  console.log(thumbnail);
-  console.log(thumbnail.slice(-3));
+  console.log();
   return (
   thumbnail.slice(-3) === 'jpg' ?
     <img className={style.img} src={thumbnail} alt={title} /> :
