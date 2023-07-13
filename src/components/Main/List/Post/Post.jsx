@@ -14,7 +14,6 @@ export const Post = ({data}) => {
     thumbnail,
     selftext: markdown,
     created: date} = data;
-  console.log(data);
 
   return (
     <li className={style.post}>

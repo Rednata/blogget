@@ -32,10 +32,13 @@ export const Content = ({title, author, markdown}) => {
         size={12}
         tsize={14}
       >{author}</Text>
-      {isModalOpen && <Modal
-        markdown={markdown}
-        title={title}
-        author={author} />}
+      {isModalOpen &&
+        <Modal
+          markdown={markdown}
+          title={title}
+          author={author}
+          closeModal={() => setIsModalOpen(false)}
+        />}
     </div>
   );
 };
