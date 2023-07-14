@@ -12,6 +12,7 @@ export const Post = ({data}) => {
     author,
     ups,
     thumbnail,
+    id,
     selftext: markdown,
     created: date} = data;
 
@@ -21,7 +22,7 @@ export const Post = ({data}) => {
         thumbnail={thumbnail}
         title={title}/>
       <DeleteBtn />
-      <Content author={author} title={title} markdown={markdown} />
+      <Content id={id} author={author} title={title} markdown={markdown} />
       <Rating ups={ups}/>
       <Time date={date} />
     </li>);

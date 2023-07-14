@@ -1,0 +1,17 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.label {
+  display: block;
+}
+
+.btn {
+  border-radius: 5px;
+  border: 1px solid grey;
+  padding: 5px 20px;
+}
