@@ -15,7 +15,9 @@ export const Text = prop => {
     href,
     center,
     fweight,
+    func,
   } = prop;
+  // console.log(prop);
   // console.warn(`fs${size}`);
   // console.log({[style[`fs${size}`]]: size});
   // {[style[`fs${size}`]]: size},
@@ -31,7 +33,7 @@ export const Text = prop => {
   );
   // console.log(classes);
   return (
-    <As className={classes} href={href}>{children}</As>
+    <As className={classes} href={href} onClick={func}>{children}</As>
   );
 };
 
@@ -51,4 +53,5 @@ Text.propTypes = {
   href: PropTypes.string,
   center: PropTypes.bool,
   fweight: PropTypes.string,
+  func: PropTypes.func,
 };

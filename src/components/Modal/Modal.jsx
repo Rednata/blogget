@@ -1,0 +1,88 @@
+import style from './Modal.module.css';
+import PropTypes from 'prop-types';
+import {ReactComponent as CloseIcon} from './img/close.svg';
+import Markdown from 'markdown-to-jsx';
+import ReactDOM from 'react-dom';
+import {useEffect, useRef} from 'react';
+import {useCommentsData} from '../../hooks/useCommentsData';
+import {Comments} from './Comments/Comments';
+import {FormComment} from './FormComment/FormComment';
+
+export const Modal = ({id, markdown, closeModal}) => {
+  const overlayRef = useRef(null);
+  const closeSvgRef = useRef(null);
+
+  // eslint-disable-next-line no-unused-vars
+  const [dataPost] = useCommentsData(id);
+  let author;
+  let title;
+  let comments;
+  if (dataPost) {
+    author = dataPost[0].data.children[0].data.author;
+    title = dataPost[0].data.children[0].data.title;
+    comments = dataPost[1].data.children;
+  }
+
+  const handleClick = ({target}) => {
+    // console.log(target);
+    if (target === overlayRef.current ||
+        target === closeSvgRef.current) {
+      closeModal();
+    }
+  };
+
+  const escapeDown = ({code}) => {
+    if (code === 'Escape') {
+      closeModal();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('click', handleClick);
+    document.addEventListener('keydown', escapeDown);
+
+    return () => {
+      document.removeEventListener('click', handleClick);
+      document.removeEventListener('keydown', escapeDown);
+    };
+  }, []);
+
+  return ReactDOM.createPortal(
+      <div className={style.overlay} ref={overlayRef}>
+        <div className={style.modal}>
+          <h2 className={style.title}>{title}</h2>
+
+          <div className={style.content}>
+            <Markdown options={{
+              overrides: {
+                a: {
+                  props: {
+                    target: '_blank',
+                  },
+                },
+              }}
+            }>
+              {markdown}
+            </Markdown>
+          </div>
+          <p className={style.author}>{author}</p>
+
+          <FormComment />
+          <Comments comments={comments} />
+
+          <button className={style.close}>
+            <CloseIcon ref={closeSvgRef}/>
+          </button>
+        </div>
+      </div>,
+      document.getElementById('modal-root'),
+  );
+};
+
+
+Modal.propTypes = {
+  title: PropTypes.string,
+  author: PropTypes.string,
+  markdown: PropTypes.string,
+  closeModal: PropTypes.func,
+};
