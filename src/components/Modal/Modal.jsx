@@ -24,7 +24,7 @@ export const Modal = ({id, markdown, closeModal}) => {
   }
 
   const handleClick = ({target}) => {
-    console.log(target);
+    // console.log(target);
     if (target === overlayRef.current ||
         target === closeSvgRef.current) {
       closeModal();

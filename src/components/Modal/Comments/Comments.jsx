@@ -4,26 +4,15 @@ import formatDate from '../../../utils/formatDate';
 // import Markdown from 'markdown-to-jsx';
 
 export const Comments = ({comments}) => {
-  console.log(comments);
   if (comments) {
-    // const {author, body, created} = comments.data;
-    const {data} = comments[1];
-    console.log('data: ', data);
-
-    // console.log('created: ', created);
-    // console.log('body: ', body);
-    // console.log('author: ', author);
-
     return (
       <ul className={style.list}>
         {
           comments.map((comment, i) => {
             const {author, body, created} = comment.data;
-            console.log('author: ', author);
-            console.log('body: ', body);
-            console.log('created: ', created);
-            if (author && body && created) {
-              return (
+
+            return (
+              author && body && created &&
                 <li key={i} className={style.item}>
                   <div className={style.body}>
                     {body}
@@ -41,7 +30,7 @@ export const Comments = ({comments}) => {
                   </div>
                   <span
                     className={style.author}>
-                      Author: {author}
+                      Comment by {author}
                   </span>
                   {
                     <span className={style.date}>
@@ -49,13 +38,14 @@ export const Comments = ({comments}) => {
                     </span>
                   }
                 </li>
-              );
-            } else {
-              return (<li key='999'>----</li>);
-            }
+            );
           })
         };
       </ul>);
+  } else {
+    return (
+      <p >Loading....</p>
+    );
   }
 };
 
