@@ -5,7 +5,10 @@ import formatDate from '../../../utils/formatDate';
 
 export const Comments = ({comments}) => {
   if (comments) {
+    console.log(comments);
     return (
+      comments.length <= 1 ?
+      <p>No comments</p> :
       <ul className={style.list}>
         {
           comments.map((comment, i) => {
@@ -13,31 +16,31 @@ export const Comments = ({comments}) => {
 
             return (
               author && body && created &&
-                <li key={i} className={style.item}>
-                  <div className={style.body}>
-                    {body}
-                    {/* <Markdown options={{
-                      overrides: {
-                        a: {
-                          props: {
-                            target: '_blank',
-                          },
+              <li key={i} className={style.item}>
+                <div className={style.body}>
+                  {body}
+                  {/* <Markdown options={{
+                    overrides: {
+                      a: {
+                        props: {
+                          target: '_blank',
                         },
-                      }}
-                    }>
-                      {body}
-                    </Markdown> */}
-                  </div>
-                  <span
-                    className={style.author}>
-                      Comment by {author}
+                      },
+                    }}
+                  }>
+                    {body}
+                  </Markdown> */}
+                </div>
+                <span
+                  className={style.author}>
+                    Comment by {author}
+                </span>
+                {
+                  <span className={style.date}>
+                    {formatDate(created)}
                   </span>
-                  {
-                    <span className={style.date}>
-                      {formatDate(created)}
-                    </span>
-                  }
-                </li>
+                }
+              </li>
             );
           })
         };
