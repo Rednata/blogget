@@ -9,6 +9,9 @@ export const Heading = props => (
     size={22}
     dsize={26}
     center
+    func1={() => {
+      console.log('Мышка наведена на заголовок');
+    }}
   >{props.text}</Text>
 );
 

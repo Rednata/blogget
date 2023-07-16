@@ -3,16 +3,15 @@ import PropTypes from 'prop-types';
 import {ReactComponent as CloseIcon} from './img/close.svg';
 import Markdown from 'markdown-to-jsx';
 import ReactDOM from 'react-dom';
-import {useEffect, useRef} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import {useCommentsData} from '../../hooks/useCommentsData';
 import {Comments} from './Comments/Comments';
 import {FormComment} from './FormComment/FormComment';
 
 export const Modal = ({id, markdown, closeModal}) => {
   const overlayRef = useRef(null);
-  const closeSvgRef = useRef(null);
+  const [isCloseClick, setIscloseClick] = useState(false);
 
-  // eslint-disable-next-line no-unused-vars
   const [dataPost] = useCommentsData(id);
   let author;
   let title;
@@ -25,8 +24,7 @@ export const Modal = ({id, markdown, closeModal}) => {
 
   const handleClick = ({target}) => {
     // console.log(target);
-    if (target === overlayRef.current ||
-        target === closeSvgRef.current) {
+    if (target === overlayRef.current) {
       closeModal();
     }
   };
@@ -48,6 +46,7 @@ export const Modal = ({id, markdown, closeModal}) => {
   }, []);
 
   return ReactDOM.createPortal(
+      !isCloseClick &&
       <div className={style.overlay} ref={overlayRef}>
         <div className={style.modal}>
           <h2 className={style.title}>{title}</h2>
@@ -70,8 +69,10 @@ export const Modal = ({id, markdown, closeModal}) => {
           <FormComment />
           <Comments comments={comments} />
 
-          <button className={style.close}>
-            <CloseIcon ref={closeSvgRef}/>
+          <button
+            className={style.close}
+            onClick={() => setIscloseClick(true)}>
+            <CloseIcon/>
           </button>
         </div>
       </div>,
