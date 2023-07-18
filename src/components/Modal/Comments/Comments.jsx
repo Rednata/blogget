@@ -5,7 +5,13 @@ import formatDate from '../../../utils/formatDate';
 
 export const Comments = ({comments}) => {
   if (comments) {
+    const temp = comments.map(({author}, ind) =>
+      <p key={ind} >{author}</p>);
+    console.log(temp.join(''));
+  }
+  if (comments) {
     console.log(comments);
+
     return (
       comments.length <= 1 ?
       <p>No comments</p> :
@@ -43,7 +49,7 @@ export const Comments = ({comments}) => {
               </li>
             );
           })
-        };
+        }
       </ul>);
   } else {
     return (
