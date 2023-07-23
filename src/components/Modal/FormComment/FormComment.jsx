@@ -1,11 +1,16 @@
-// import React from 'react';
 import {useState} from 'react';
 import style from './FormComment.module.css';
 import {useRef} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {updateComment} from '../../../store';
 
 export const FormComment = props => {
   const [isForm, setIsForm] = useState(false);
   const [isBtn, setIsBtn] = useState(true);
+
+  const value = useSelector(state => state.comment);
+
+  const dispatch = useDispatch();
 
   const formRef = useRef(null);
   const textareaRef = useRef(null);
@@ -13,6 +18,10 @@ export const FormComment = props => {
   const handleClick = (e) => {
     e.preventDefault();
     console.log(formRef.current.сomment.value);
+  };
+
+  const handleChange = (e) => {
+    dispatch(updateComment(e.target.value));
   };
 
   const showForm = () => {
@@ -34,6 +43,8 @@ export const FormComment = props => {
           rows={5}
           cols={40}
           ref={textareaRef}
+          value={value}
+          onChange={handleChange}
         >
         </textarea>
         <button className={style.btn}>Submit</button>
