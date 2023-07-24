@@ -1,9 +1,15 @@
 import {createStore} from 'redux';
 import {getToken, setToken} from '../api/token';
+import {composeWithDevTools} from '@redux-devtools/extension';
 
 const UPDATE_COMMENT = 'UPDATE_COMMENT';
 const UPDATE_TOKEN = 'UPDATE_TOKEN';
 const DELETE_TOKEN = 'DELETE_TOKEN';
+
+const initialState = {
+  comment: 'Hello Redux',
+  token: getToken(),
+};
 
 export const updateComment = comment => ({
   type: UPDATE_COMMENT,
@@ -19,13 +25,7 @@ export const deleteToken = () => ({
   type: DELETE_TOKEN,
 });
 
-const initialState = {
-  comment: 'Hello Redux',
-  token: getToken(),
-};
-
 const rootReducer = (state = initialState, action) => {
-  console.log(state);
   switch (action.type) {
     case UPDATE_COMMENT:
       return {
@@ -47,4 +47,4 @@ const rootReducer = (state = initialState, action) => {
   }
 };
 
-export const store = createStore(rootReducer);
+export const store = createStore(rootReducer, composeWithDevTools());
