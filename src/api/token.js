@@ -3,6 +3,7 @@ export const setToken = (token) => {
 };
 
 export const getToken = () => {
+  // eslint-disable-next-line prefer-const
   let token = '';
   if (location.pathname.includes('/auth')) {
     token = new URLSearchParams(location.hash.substring(1))
@@ -11,6 +12,7 @@ export const getToken = () => {
   }
   if (localStorage.getItem('bearer')) {
     setToken(localStorage.getItem('bearer'));
+    token = localStorage.getItem('bearer');
   }
 
   return token;
