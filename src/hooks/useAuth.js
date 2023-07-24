@@ -7,8 +7,8 @@ export const useAuth = () => {
   const [auth, setAuth] = useState({});
 
   const token = useSelector(state => state.token);
+
   const dispatch = useDispatch();
-  console.log('token = ', token.slice(0, 10));
 
   useEffect(() => {
     if (!token) return;
