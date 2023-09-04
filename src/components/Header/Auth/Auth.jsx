@@ -13,7 +13,6 @@ export const Auth = () => {
   const [showLogout, setShowLogout] = useState(false);
 
   const [auth, loading, clearAuth] = useAuth();
-
   const dispatch = useDispatch();
 
   const getOut = () => {

@@ -1,8 +1,7 @@
-import React, {useContext} from 'react';
-import {postContext} from '../../../context/postContext';
 import style from './List.module.css';
 import Post from './Post';
 import Loader from './Loader';
+import {useBestPosts} from '../../../hooks/useBestPosts';
 // import {generateRandomID} from '../../../utils/generateRandomID';
 // import {useBestPosts} from '../../../hooks/useBestPosts';
 
@@ -38,13 +37,12 @@ import Loader from './Loader';
 // ];
 
 export const List = props => {
-  // generateRandomID();
-  const [bestPosts] = useContext(postContext);
+  const [bestPosts] = useBestPosts();
 
   return (
     <ul className={style.list}>
       {
-        bestPosts ?
+        bestPosts.length >= 1 ?
           bestPosts.map(({data}) =>
             <Post key={data.id} data={data} />) :
         <Loader />

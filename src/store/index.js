@@ -4,11 +4,13 @@ import {tokenReducer, tokenMiddleWare} from './tokenReducer';
 import {commentReducer} from './commentReducer';
 import thunk from 'redux-thunk';
 import {authReducer} from './auth/authReducer';
+import {postsDataReducer} from './postsDataReducer/postsDataReducer';
 
 const rootReducer = combineReducers({
   token: tokenReducer,
   comment: commentReducer,
   auth: authReducer,
+  postsData: postsDataReducer,
 });
 
 // const logger = (store) => (next) => (action) => {
