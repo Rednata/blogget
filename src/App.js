@@ -1,6 +1,5 @@
 import {Header} from './components/Header/Header';
 import {Main} from './components/Main/Main';
-import {AuthContextProvider} from './context/authContext';
 import {PostContextProvider} from './context/postContext';
 import {useDispatch} from 'react-redux';
 import {updateToken} from './store/tokenReducer';
@@ -23,12 +22,10 @@ const App = () => {
 
   // store.dispatch(time());
   return (
-    <AuthContextProvider>
-      <PostContextProvider>
-        <Header />
-        <Main />
-      </PostContextProvider>
-    </AuthContextProvider>
+    <PostContextProvider>
+      <Header />
+      <Main />
+    </PostContextProvider>
   );
 };
 

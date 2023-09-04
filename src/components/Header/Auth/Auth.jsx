@@ -1,17 +1,18 @@
-import {useState, useContext} from 'react';
+import {useState} from 'react';
 import style from './Auth.module.css';
 import PropTypes from 'prop-types';
 import {urlAuth} from '../../../api/auth';
 import {Text} from '../../../UI/Text';
 import {ReactComponent as LoginIcon} from './img/login.svg';
-import {authContext} from '../../../context/authContext';
 import {useDispatch} from 'react-redux';
 import {deleteToken} from '../../../store/tokenReducer';
+import {useAuth} from '../../../hooks/useAuth';
+import AuthLoader from './AuthLoader';
 
 export const Auth = () => {
   const [showLogout, setShowLogout] = useState(false);
 
-  const {auth, clearAuth} = useContext(authContext);
+  const [auth, loading, clearAuth] = useAuth();
 
   const dispatch = useDispatch();
 
@@ -26,7 +27,7 @@ export const Auth = () => {
 
   return (
     <div className={style.container}>
-      {auth.name ? (
+      {loading ? (<AuthLoader />) : auth.name ? (
         <>
           <button className={style.btn} onClick={getOut}>
             <img
