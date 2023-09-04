@@ -7,7 +7,7 @@ import {ReactComponent as LoginIcon} from './img/login.svg';
 import {useDispatch} from 'react-redux';
 import {deleteToken} from '../../../store/tokenReducer';
 import {useAuth} from '../../../hooks/useAuth';
-import AuthLoader from './AuthLoader';
+import PreLoader from '../../../UI/PreLoader';
 
 export const Auth = () => {
   const [showLogout, setShowLogout] = useState(false);
@@ -26,7 +26,7 @@ export const Auth = () => {
 
   return (
     <div className={style.container}>
-      {loading ? (<AuthLoader />) : auth.name ? (
+      {loading ? (<PreLoader size={30} />) : auth.name ? (
         <>
           <button className={style.btn} onClick={getOut}>
             <img

@@ -1,6 +1,6 @@
 import style from './List.module.css';
 import Post from './Post';
-import Loader from './Loader';
+import PreLoader from '../../../UI/PreLoader';
 import {useBestPosts} from '../../../hooks/useBestPosts';
 // import {generateRandomID} from '../../../utils/generateRandomID';
 // import {useBestPosts} from '../../../hooks/useBestPosts';
@@ -45,7 +45,7 @@ export const List = props => {
         bestPosts.length >= 1 ?
           bestPosts.map(({data}) =>
             <Post key={data.id} data={data} />) :
-        <Loader />
+        <PreLoader size={250}/>
       }
     </ul>
   );
