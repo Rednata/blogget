@@ -7,24 +7,17 @@ import {Modal} from '../../../../Modal/Modal';
 export const Content = ({id, title, author, markdown}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const handleClickOnLinkPost = () => {
+    setIsModalOpen(true);
+  };
+
   return (
     <div className={style.content}>
       <Text As='h2' className={style.title}>
-        <Text As='a'
+        <a href="#post"
           className={style.linkPost}
-          // color='grey2D'
-          color='green'
-          size={18}
-          tsize={26}
-          dsize={32}
-          href="#post"
-          func={() => {
-            setIsModalOpen(true);
-          }
-          }
-        >
-          {title}
-        </Text>
+          onClick={handleClickOnLinkPost}
+        >{title}</a>
       </Text>
       <Text As='a' href="#author"
         className={style.linkAuthor}
@@ -51,3 +44,18 @@ Content.propTypes = {
   id: PropTypes.string,
 };
 
+
+{/* <Text As='a'
+  className={style.linkPost}
+  // color='grey2D'
+  color='green'
+  size={18}
+  tsize={26}
+  dsize={32}
+  href="#post"
+  func={() => {
+    setIsModalOpen(true);
+  }
+  }
+> */}
+// </Text>

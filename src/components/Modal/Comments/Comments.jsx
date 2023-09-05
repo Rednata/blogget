@@ -4,6 +4,8 @@ import formatDate from '../../../utils/formatDate';
 // import Markdown from 'markdown-to-jsx';
 
 export const Comments = ({postComments}) => {
+  console.log();
+
   if (postComments) {
     return (
       postComments.length <= 1 ?
@@ -44,11 +46,12 @@ export const Comments = ({postComments}) => {
           })
         }
       </ul>);
-  } else {
-    return (
-      <p >Loading....</p>
-    );
   }
+  // } else {
+  //   return (
+  //     <p >Loading....</p>
+  //   );
+  // }
 };
 
 Comments.propTypes = {

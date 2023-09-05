@@ -1,7 +1,7 @@
 import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {
-  getPostCommentsRequestAsync,
+  postCommentsRequestAsync,
 } from '../store/postCommentsDataReducer/postCommentsDataAction';
 
 export const useCommentsData = (id) => {
@@ -9,7 +9,7 @@ export const useCommentsData = (id) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getPostCommentsRequestAsync(id));
+    dispatch(postCommentsRequestAsync(id));
   }, [id]);
 
   return comments;
