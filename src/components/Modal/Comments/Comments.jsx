@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import formatDate from '../../../utils/formatDate';
 // import Markdown from 'markdown-to-jsx';
 
-export const Comments = ({comments}) => {
-  if (comments) {
+export const Comments = ({postComments}) => {
+  if (postComments) {
     return (
-      comments.length <= 1 ?
+      postComments.length <= 1 ?
       <p>No comments</p> :
       <ul className={style.list}>
         {
-          comments.map((comment, i) => {
+          postComments.map((comment, i) => {
             const {author, body, created} = comment.data;
 
             return (
@@ -52,7 +52,7 @@ export const Comments = ({comments}) => {
 };
 
 Comments.propTypes = {
-  comments: PropTypes.array,
+  postComments: PropTypes.array,
 };
 
 

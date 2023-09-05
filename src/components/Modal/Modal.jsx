@@ -12,14 +12,12 @@ export const Modal = ({id, markdown, closeModal}) => {
   const overlayRef = useRef(null);
   const [isCloseClick, setIscloseClick] = useState(false);
 
-  const [dataPost] = useCommentsData(id);
-  let author;
-  let title;
-  let comments;
-  if (dataPost) {
-    author = dataPost[0].data.children[0].data.author;
-    title = dataPost[0].data.children[0].data.title;
-    comments = dataPost[1].data.children;
+  const [author, title, postComments] = useCommentsData(id);
+
+  if (postComments) {
+    console.log('author: ', author);
+    console.log('title: ', title);
+    console.log('postComments: ', postComments);
   }
 
   const handleClick = ({target}) => {
@@ -67,7 +65,7 @@ export const Modal = ({id, markdown, closeModal}) => {
           <p className={style.author}>{author}</p>
 
           <FormComment />
-          <Comments comments={comments} />
+          <Comments postComments={postComments} />
 
           <button
             className={style.close}
