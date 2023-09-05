@@ -2,13 +2,13 @@ import {useState} from 'react';
 import style from './FormComment.module.css';
 import {useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {updateComment} from '../../../store';
+import {updateComment} from '../../../store/commentReducer';
 
 export const FormComment = props => {
   const [isForm, setIsForm] = useState(false);
   const [isBtn, setIsBtn] = useState(true);
 
-  const value = useSelector(state => state.comment);
+  const value = useSelector(state => state.comment.comment);
 
   const dispatch = useDispatch();
 

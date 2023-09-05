@@ -1,20 +1,22 @@
-import {useState, useContext} from 'react';
+import {useState} from 'react';
 import style from './Auth.module.css';
 import PropTypes from 'prop-types';
 import {urlAuth} from '../../../api/auth';
 import {Text} from '../../../UI/Text';
 import {ReactComponent as LoginIcon} from './img/login.svg';
-import {authContext} from '../../../context/authContext';
-import {useDispatch} from 'react-redux';
-import {deleteToken} from '../../../store';
+import {useDispatch, useSelector} from 'react-redux';
+import {deleteToken} from '../../../store/tokenReducer';
+import {useAuth} from '../../../hooks/useAuth';
+import PreLoader from '../../../UI/PreLoader';
+import {ModalMessage} from './ModalMessage/ModalMessage';
 
 export const Auth = () => {
   const [showLogout, setShowLogout] = useState(false);
 
-  const {auth, clearAuth} = useContext(authContext);
-
+  const [auth, loading, clearAuth] = useAuth();
   const dispatch = useDispatch();
 
+  const errorMessage = useSelector(state => state.auth.error);
   const getOut = () => {
     setShowLogout(!showLogout);
   };
@@ -25,8 +27,8 @@ export const Auth = () => {
   };
 
   return (
-    <div className={style.container}>
-      {auth.name ? (
+    <div className={style.container} id='auth'>
+      {loading ? (<PreLoader size={30} />) : auth.name ? (
         <>
           <button className={style.btn} onClick={getOut}>
             <img
@@ -43,9 +45,12 @@ export const Auth = () => {
           }
         </>
         ) : (
-      <Text className={style.authLink} As='a' href={urlAuth}>
-        <LoginIcon width={25} height={25} color='#cc6633'/>
-      </Text>
+          <>
+            <Text className={style.authLink} As='a' href={urlAuth}>
+              <LoginIcon width={25} height={25} color='#cc6633'/>
+            </Text>
+            {errorMessage && <ModalMessage />}
+          </>
       )
       }
     </div>

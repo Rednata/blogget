@@ -3,27 +3,20 @@ import PropTypes from 'prop-types';
 import {ReactComponent as CloseIcon} from './img/close.svg';
 import Markdown from 'markdown-to-jsx';
 import ReactDOM from 'react-dom';
-import {useState, useEffect, useRef} from 'react';
+import {useEffect, useRef} from 'react';
 import {useCommentsData} from '../../hooks/useCommentsData';
 import {Comments} from './Comments/Comments';
 import {FormComment} from './FormComment/FormComment';
+import {useSelector} from 'react-redux';
+import PreLoader from '../../UI/PreLoader';
 
 export const Modal = ({id, markdown, closeModal}) => {
   const overlayRef = useRef(null);
-  const [isCloseClick, setIscloseClick] = useState(false);
 
-  const [dataPost] = useCommentsData(id);
-  let author;
-  let title;
-  let comments;
-  if (dataPost) {
-    author = dataPost[0].data.children[0].data.author;
-    title = dataPost[0].data.children[0].data.title;
-    comments = dataPost[1].data.children;
-  }
+  const [author, title, postComments] = useCommentsData(id);
+  const status = useSelector(state => state.postComments.status);
 
   const handleClick = ({target}) => {
-    // console.log(target);
     if (target === overlayRef.current) {
       closeModal();
     }
@@ -46,32 +39,36 @@ export const Modal = ({id, markdown, closeModal}) => {
   }, []);
 
   return ReactDOM.createPortal(
-      !isCloseClick &&
       <div className={style.overlay} ref={overlayRef}>
         <div className={style.modal}>
-          <h2 className={style.title}>{title}</h2>
-
-          <div className={style.content}>
-            <Markdown options={{
-              overrides: {
-                a: {
-                  props: {
-                    target: '_blank',
-                  },
-                },
-              }}
-            }>
-              {markdown}
-            </Markdown>
-          </div>
-          <p className={style.author}>{author}</p>
+          {status === 'loading' && <PreLoader />}
+          {status === 'error' && 'ERROR.....'}
+          {status === 'loaded' && (
+            <>
+              <h2 className={style.title}>{title}</h2>
+              <div className={style.content}>
+                <Markdown options={{
+                  overrides: {
+                    a: {
+                      props: {
+                        target: '_blank',
+                      },
+                    },
+                  }}
+                }>
+                  {markdown}
+                </Markdown>
+              </div>
+              <p className={style.author}>{author}</p>
+            </>
+          )}
 
           <FormComment />
-          <Comments comments={comments} />
+          <Comments postComments={postComments} />
 
           <button
             className={style.close}
-            onClick={() => setIscloseClick(true)}>
+            onClick={closeModal}>
             <CloseIcon/>
           </button>
         </div>

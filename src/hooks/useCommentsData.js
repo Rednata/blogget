@@ -1,25 +1,18 @@
-import {URL_API} from '../api/const';
-// eslint-disable-next-line no-unused-vars
-import {useEffect, useState} from 'react';
-import {useSelector} from 'react-redux';
+import {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  postCommentsRequestAsync,
+} from '../store/postCommentsDataReducer/postCommentsDataAction';
 
 export const useCommentsData = (id) => {
-  const [comments, setComments] = useState('');
-  const token = useSelector(state => state.token);
+  const comments = useSelector(state => state.postComments.postComments);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!token) return;
-
-    fetch(`${URL_API}/comments/${id}`, {
-      headers: {
-        Authorization: `bearer ${token}`,
-      },
-    })
-        .then(response => response.json())
-        .then(data => setComments(data));
+    dispatch(postCommentsRequestAsync(id));
   }, [id]);
 
-  return [comments];
+  return comments;
 };
 
 
