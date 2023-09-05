@@ -41,7 +41,7 @@ export const Modal = ({id, markdown, closeModal}) => {
   return ReactDOM.createPortal(
       <div className={style.overlay} ref={overlayRef}>
         <div className={style.modal}>
-          {status === 'loading' && <PreLoader />}
+          {status === 'loading' && <PreLoader size={200}/>}
           {status === 'error' && 'ERROR.....'}
           {status === 'loaded' && (
             <>
@@ -60,11 +60,11 @@ export const Modal = ({id, markdown, closeModal}) => {
                 </Markdown>
               </div>
               <p className={style.author}>{author}</p>
+
+              <FormComment />
+              <Comments postComments={postComments} />
             </>
           )}
-
-          <FormComment />
-          <Comments postComments={postComments} />
 
           <button
             className={style.close}
