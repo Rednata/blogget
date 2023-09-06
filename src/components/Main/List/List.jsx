@@ -1,7 +1,11 @@
+/* eslint-disable no-unused-vars */
 import style from './List.module.css';
 import Post from './Post';
 import PreLoader from '../../../UI/PreLoader';
 import {useBestPosts} from '../../../hooks/useBestPosts';
+import {useRef, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {postsRequestAsync} from '../../../store/postsReducer/postsAction';
 // import {generateRandomID} from '../../../utils/generateRandomID';
 // import {useBestPosts} from '../../../hooks/useBestPosts';
 
@@ -37,7 +41,23 @@ import {useBestPosts} from '../../../hooks/useBestPosts';
 // ];
 
 export const List = props => {
-  const [bestPosts] = useBestPosts();
+  // const [bestPosts] = useBestPosts();
+  const bestPosts = useSelector(state => state.postsData.posts);
+  console.log(bestPosts);
+  const endList = useRef(null);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        console.log('see U');
+        dispatch(postsRequestAsync());
+      }
+    }, {
+      rootMargin: '100px',
+    });
+    observer.observe(endList.current);
+  }, [endList.current]);
 
   return (
     <ul className={style.list}>
@@ -47,6 +67,7 @@ export const List = props => {
             <Post key={data.id} data={data} />) :
         <PreLoader size={250}/>
       }
+      <li ref={endList} className={style.end} />
     </ul>
   );
 };

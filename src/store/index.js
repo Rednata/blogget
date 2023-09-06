@@ -4,7 +4,7 @@ import {tokenReducer, tokenMiddleWare} from './tokenReducer';
 import {commentReducer} from './commentReducer';
 import thunk from 'redux-thunk';
 import {authReducer} from './authReducer/authReducer';
-import {postsDataReducer} from './postsDataReducer/postsDataReducer';
+import {postsReducer} from './postsReducer/postsReducer';
 import {
   postCommentsDataReducer,
 } from './postCommentsDataReducer/postCommentsDataReducer.js';
@@ -13,7 +13,7 @@ const rootReducer = combineReducers({
   token: tokenReducer,
   comment: commentReducer,
   auth: authReducer,
-  postsData: postsDataReducer,
+  postsData: postsReducer,
   postComments: postCommentsDataReducer,
 });
 
