@@ -16,7 +16,7 @@ export const Comments = ({postComments}) => {
             const {author, body, created} = comment.data;
 
             return (
-              author && body && created &&
+              body &&
               <li key={i} className={style.item}>
                 <div className={style.body}>
                   {body}
@@ -58,11 +58,3 @@ Comments.propTypes = {
   postComments: PropTypes.array,
 };
 
-
-{/* comments.map((comment, ind) => {
-            console.log();
-            return (
-              <p key={ind}>{comment.data.body}</p>
-            )})}; */}
-// 1689333887
-// 1689284575

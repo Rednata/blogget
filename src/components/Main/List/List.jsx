@@ -1,11 +1,11 @@
-/* eslint-disable no-unused-vars */
 import style from './List.module.css';
 import Post from './Post';
 import PreLoader from '../../../UI/PreLoader';
-import {useBestPosts} from '../../../hooks/useBestPosts';
 import {useRef, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {postsRequestAsync} from '../../../store/postsReducer/postsAction';
+import {Outlet, useParams} from 'react-router-dom';
+
 // import {generateRandomID} from '../../../utils/generateRandomID';
 // import {useBestPosts} from '../../../hooks/useBestPosts';
 
@@ -43,9 +43,13 @@ import {postsRequestAsync} from '../../../store/postsReducer/postsAction';
 export const List = props => {
   // const [bestPosts] = useBestPosts();
   const bestPosts = useSelector(state => state.postsData.posts);
-  console.log(bestPosts);
   const endList = useRef(null);
   const dispatch = useDispatch();
+  const {page} = useParams();
+
+  useEffect(() => {
+    dispatch(postsRequestAsync(page));
+  }, [page]);
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -57,17 +61,26 @@ export const List = props => {
       rootMargin: '100px',
     });
     observer.observe(endList.current);
+
+    return () => {
+      if (endList.current) {
+        observer.unobserve(endList.current);
+      }
+    };
   }, [endList.current]);
 
   return (
-    <ul className={style.list}>
-      {
-        bestPosts.length >= 1 ?
-          bestPosts.map(({data}) =>
-            <Post key={data.id} data={data} />) :
-        <PreLoader size={250}/>
-      }
-      <li ref={endList} className={style.end} />
-    </ul>
+    <>
+      <ul className={style.list}>
+        {
+          bestPosts.length >= 1 ?
+            bestPosts.map(({data}) =>
+              <Post key={data.id} data={data} />) :
+          <PreLoader size={250}/>
+        }
+        <li ref={endList} className={style.end} />
+      </ul>
+      <Outlet />
+    </>
   );
 };

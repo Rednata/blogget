@@ -1,11 +1,14 @@
+/* eslint-disable no-unused-vars */
 import style from './Content.module.css';
 import PropTypes from 'prop-types';
 import {Text} from '../../../../../UI/Text';
 import {useState} from 'react';
-import {Modal} from '../../../../Modal/Modal';
+import {Link, useParams} from 'react-router-dom';
 
 export const Content = ({id, title, author, markdown}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const {page} = useParams();
 
   const handleClickOnLinkPost = () => {
     setIsModalOpen(true);
@@ -14,10 +17,13 @@ export const Content = ({id, title, author, markdown}) => {
   return (
     <div className={style.content}>
       <Text As='h2' className={style.title}>
-        <a href="#post"
+        <Link
           className={style.linkPost}
+          to={`/category/${page}/post/${id}`}>{title}
+        </Link>
+        {/* <a href="#post"
           onClick={handleClickOnLinkPost}
-        >{title}</a>
+        >{title}</a> */}
       </Text>
       <Text As='a' href="#author"
         className={style.linkAuthor}
@@ -25,14 +31,6 @@ export const Content = ({id, title, author, markdown}) => {
         size={12}
         tsize={14}
       >{author}</Text>
-      {isModalOpen &&
-        <Modal
-          markdown={markdown}
-          title={title}
-          author={author}
-          id={id}
-          closeModal={() => setIsModalOpen(false)}
-        />}
     </div>
   );
 };

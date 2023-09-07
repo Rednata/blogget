@@ -1,7 +1,8 @@
+/* eslint-disable no-unused-vars */
 import style from './Modal.module.css';
 import PropTypes from 'prop-types';
 import {ReactComponent as CloseIcon} from './img/close.svg';
-import Markdown from 'markdown-to-jsx';
+// import Markdown from 'markdown-to-jsx';
 import ReactDOM from 'react-dom';
 import {useEffect, useRef} from 'react';
 import {useCommentsData} from '../../hooks/useCommentsData';
@@ -9,8 +10,13 @@ import {Comments} from './Comments/Comments';
 import {FormComment} from './FormComment/FormComment';
 import {useSelector} from 'react-redux';
 import PreLoader from '../../UI/PreLoader';
+import {useNavigate, useParams} from 'react-router-dom';
 
-export const Modal = ({id, markdown, closeModal}) => {
+export const Modal = () => {
+  const {id, page} = useParams();
+  const navigate = useNavigate();
+  console.log(id);
+  console.log(123);
   const overlayRef = useRef(null);
 
   const [author, title, postComments] = useCommentsData(id);
@@ -18,13 +24,16 @@ export const Modal = ({id, markdown, closeModal}) => {
 
   const handleClick = ({target}) => {
     if (target === overlayRef.current) {
-      closeModal();
+      // closeModal();
+      navigate(`/category/${page}`);
     }
   };
 
   const escapeDown = ({code}) => {
     if (code === 'Escape') {
-      closeModal();
+      // closeModal();
+      // navigate(-1);
+      navigate(`/category/${page}`);
     }
   };
 
@@ -47,7 +56,7 @@ export const Modal = ({id, markdown, closeModal}) => {
             <>
               <h2 className={style.title}>{title}</h2>
               <div className={style.content}>
-                <Markdown options={{
+                {/* <Markdown options={{
                   overrides: {
                     a: {
                       props: {
@@ -57,7 +66,8 @@ export const Modal = ({id, markdown, closeModal}) => {
                   }}
                 }>
                   {markdown}
-                </Markdown>
+                </Markdown> */}
+                ККККК
               </div>
               <p className={style.author}>{author}</p>
 
@@ -68,7 +78,8 @@ export const Modal = ({id, markdown, closeModal}) => {
 
           <button
             className={style.close}
-            onClick={closeModal}>
+            onClick={() => navigate(`/category/${page}`)}
+          >
             <CloseIcon/>
           </button>
         </div>

@@ -3,6 +3,7 @@ import {
   POSTS_REQUEST_SUCCESS,
   POSTS_REQUEST_SUCCESS_AFTER,
   POSTS_REQUEST_ERROR,
+  CHANGE_PAGE,
 } from './postsAction';
 
 const initialState = {
@@ -11,6 +12,7 @@ const initialState = {
   error: '',
   after: '',
   isLast: false,
+  page: '',
 };
 
 export const postsReducer = (state = initialState, action) => {
@@ -38,6 +40,14 @@ export const postsReducer = (state = initialState, action) => {
         posts: [...state.posts, ...action.posts],
         error: '',
         after: action.after,
+      };
+
+    case CHANGE_PAGE:
+      return {
+        ...state,
+        page: action.page,
+        after: '',
+        isLast: false,
       };
 
     case POSTS_REQUEST_ERROR:
