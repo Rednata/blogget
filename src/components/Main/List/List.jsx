@@ -1,7 +1,8 @@
+/* eslint-disable no-unused-vars */
 import style from './List.module.css';
 import Post from './Post';
 import PreLoader from '../../../UI/PreLoader';
-import {useRef, useEffect} from 'react';
+import {useRef, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {postsRequestAsync} from '../../../store/postsReducer/postsAction';
 import {Outlet, useParams} from 'react-router-dom';
@@ -41,20 +42,27 @@ import {Outlet, useParams} from 'react-router-dom';
 // ];
 
 export const List = props => {
+  const countAfter = useSelector(state => state.postsData.countAfter);
+  // const [onHandleClickBtn, setOnHandleClickBtn] = useState(false);
+  // const [isMoreShow, setIsMoreShow] = useState(false);
   // const [bestPosts] = useBestPosts();
   const bestPosts = useSelector(state => state.postsData.posts);
   const endList = useRef(null);
   const dispatch = useDispatch();
   const {page} = useParams();
 
+  const loadMorePosts = () => {
+    dispatch(postsRequestAsync());
+  };
+
   useEffect(() => {
     dispatch(postsRequestAsync(page));
   }, [page]);
 
   useEffect(() => {
+    if (!endList.current) return;
     const observer = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
-        console.log('see U');
         dispatch(postsRequestAsync());
       }
     }, {
@@ -66,6 +74,7 @@ export const List = props => {
       if (endList.current) {
         observer.unobserve(endList.current);
       }
+      // };
     };
   }, [endList.current]);
 
@@ -78,8 +87,14 @@ export const List = props => {
               <Post key={data.id} data={data} />) :
           <PreLoader size={250}/>
         }
-        <li ref={endList} className={style.end} />
       </ul>
+      {countAfter < 2 ?
+          <li ref={endList} className={style.end}/> :
+            <button
+              className={style.btnMore}
+              onClick={() => loadMorePosts()}
+            >Загрузить еще...</button>
+      }
       <Outlet />
     </>
   );

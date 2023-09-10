@@ -13,6 +13,7 @@ const initialState = {
   after: '',
   isLast: false,
   page: '',
+  countAfter: 0,
 };
 
 export const postsReducer = (state = initialState, action) => {
@@ -40,6 +41,7 @@ export const postsReducer = (state = initialState, action) => {
         posts: [...state.posts, ...action.posts],
         error: '',
         after: action.after,
+        countAfter: state.countAfter + 1,
       };
 
     case CHANGE_PAGE:

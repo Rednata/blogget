@@ -67,7 +67,6 @@ export const Modal = () => {
                 }>
                   {markdown}
                 </Markdown> */}
-                ККККК
               </div>
               <p className={style.author}>{author}</p>
 

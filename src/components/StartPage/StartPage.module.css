@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 40px;
+  padding-top: 50px;
+}
+
+.start {
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.welcome {
+  font-size: 22px;
+}
+
+.checkedCategory {
+  font-size: 20px;
+  color: var(--orange)
+}
