@@ -8,7 +8,7 @@ export const PreLoader = ({size}) => {
     <RingLoader
       className={style.container}
       color='#cc6633'
-      css={{display: 'block'}}
+      cssOverride={{display: 'block'}}
       size={size} />);
 };
 

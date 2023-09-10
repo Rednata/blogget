@@ -1,14 +1,14 @@
 import {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {postsDataRequestAsync} from '../store/postsDataReducer/postsDataAction';
+import {postsRequestAsync} from '../store/postsReducer/postsAction';
 
 export const useBestPosts = () => {
-  const bestPosts = useSelector(state => state.postsData.data);
+  const bestPosts = useSelector(state => state.postsData.posts);
   const dispatch = useDispatch();
   const token = useSelector(state => state.token.token);
 
   useEffect(() => {
-    dispatch(postsDataRequestAsync());
+    dispatch(postsRequestAsync());
   }, [token]);
 
   return [bestPosts];
