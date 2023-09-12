@@ -43,17 +43,10 @@ import {Outlet, useParams} from 'react-router-dom';
 
 export const List = props => {
   const countAfter = useSelector(state => state.postsData.countAfter);
-  // const [onHandleClickBtn, setOnHandleClickBtn] = useState(false);
-  // const [isMoreShow, setIsMoreShow] = useState(false);
-  // const [bestPosts] = useBestPosts();
   const bestPosts = useSelector(state => state.postsData.posts);
   const endList = useRef(null);
   const dispatch = useDispatch();
   const {page} = useParams();
-
-  const loadMorePosts = () => {
-    dispatch(postsRequestAsync());
-  };
 
   useEffect(() => {
     dispatch(postsRequestAsync(page));
@@ -92,7 +85,7 @@ export const List = props => {
           <li ref={endList} className={style.end}/> :
             <button
               className={style.btnMore}
-              onClick={() => loadMorePosts()}
+              onClick={() => dispatch(postsRequestAsync())}
             >Загрузить еще...</button>
       }
       <Outlet />
