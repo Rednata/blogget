@@ -1,6 +1,6 @@
 import style from './Comments.module.css';
 import PropTypes from 'prop-types';
-import formatDate from '../../../utils/formatDate';
+import Time from '../../Main/List/Post/Time';
 // import Markdown from 'markdown-to-jsx';
 
 export const Comments = ({postComments}) => {
@@ -37,9 +37,8 @@ export const Comments = ({postComments}) => {
                     Comment by {author}
                 </span>
                 {
-                  <span className={style.date}>
-                    {formatDate(created)}
-                  </span>
+                  <Time className={style.date} date={created}>
+                  </Time>
                 }
               </li>
             );
