@@ -3,18 +3,18 @@ import {composeWithDevTools} from '@redux-devtools/extension';
 import {tokenReducer, tokenMiddleWare} from './tokenReducer';
 import {commentReducer} from './commentReducer';
 import thunk from 'redux-thunk';
-import {authReducer} from './authReducer/authReducer';
-import {postsReducer} from './postsReducer/postsReducer';
+import {authReducer} from './auth/authReducer';
+import {postsReducer} from './posts/postsReducer';
 import {
-  postCommentsDataReducer,
-} from './postCommentsDataReducer/postCommentsDataReducer.js';
+  commentsReducer,
+} from './comments/commentsReducer.js';
 
 const rootReducer = combineReducers({
   token: tokenReducer,
   comment: commentReducer,
   auth: authReducer,
   postsData: postsReducer,
-  postComments: postCommentsDataReducer,
+  comments: commentsReducer,
 });
 
 // const logger = (store) => (next) => (action) => {

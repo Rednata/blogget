@@ -4,7 +4,7 @@ import Post from './Post';
 import PreLoader from '../../../UI/PreLoader';
 import {useRef, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {postsRequestAsync} from '../../../store/postsReducer/postsAction';
+import {postsRequestAsync} from '../../../store/posts/postsAction';
 import {Outlet, useParams} from 'react-router-dom';
 
 // import {generateRandomID} from '../../../utils/generateRandomID';
