@@ -5,8 +5,10 @@ import {
 } from './commentsAction';
 
 const initialState = {
+  post: {},
   comments: [],
   status: '',
+  error: '',
 };
 
 export const commentsReducer = (state = initialState, action) => {
@@ -15,17 +17,22 @@ export const commentsReducer = (state = initialState, action) => {
       return {
         ...state,
         status: 'loading',
+        error: '',
       };
 
     case COMMENTS_REQUEST_SUCCESS:
       return {
-        ...state, comments: action.comments,
+        ...state,
+        posts: action.post,
+        comments: action.comments,
         status: 'loaded',
+        error: '',
       };
     case COMMENTS_REQUEST_ERROR:
       return {
         ...state,
         status: 'error',
+        error: action.error,
       };
     default:
       return state;

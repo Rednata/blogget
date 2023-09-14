@@ -1,48 +1,34 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {postCommentsRequestAsync} from './commentsAction';
+import {commentsRequestAsync} from './commentsAction';
+// import {commentsRequestAsync} from './commentsAction';
+
+console.log(commentsRequestAsync.pending.type);
+console.log(commentsRequestAsync.fulfilled.type);
 
 const initialState = {
   post: {},
-  postComments: [],
+  comments: [],
   status: '',
   error: '',
-  nat: 'OK',
 };
 
 export const commentsSlice = createSlice({
   name: 'comments',
   initialState,
   reducers: {
-    // postCommentsRequest: (state) => {
-    //   state.status = 'loading';
-    //   state.error = '';
-    // },
-    // postCommentsRequestSuccess: (state, action) => {
-    //   state.post = action.payload.post;
-    //   state.postComments = action.payload.postCommentsData;
-    //   state.status = 'loaded';
-    //   state.error = '';
-    //   state.nat = 'ok!!!!!!!!!!!!!!!';
-    // },
-    // postCommentsRequestError: (state, action) => {
-    //   state.status = 'error';
-    //   state.error = action.payload.error;
-    // },
   },
-
   extraReducers: {
-    [postCommentsRequestAsync.pending.type]: (state) => {
+    [commentsRequestAsync.pending.type]: (state) => {
       state.status = 'loading';
       state.error = '';
     },
-    [postCommentsRequestAsync.fulfilled.type]: (state, action) => {
-      state.post = action.payload.post;
-      state.postComments = action.payload.postCommentsData;
+    [commentsRequestAsync.fulfilled.type]: (state, action) => {
+      state.post = action.payload.postInfo;
+      state.comments = action.payload.comments;
       state.status = 'loaded';
       state.error = '';
-      state.nat = 'ok!!!!!!!!!!!!!!!';
     },
-    [postCommentsRequestAsync.rejected.type]: (state, action) => {
+    [commentsRequestAsync.rejected.type]: (state, action) => {
       state.status = 'error';
       state.error = action.payload.error;
     },

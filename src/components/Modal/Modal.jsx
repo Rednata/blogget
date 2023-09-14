@@ -18,9 +18,11 @@ export const Modal = () => {
 
   const overlayRef = useRef(null);
 
-  const [author, title, comments] = useCommentsData(id);
+  const {post, comments} = useCommentsData(id);
+  const {author, title} = post;
 
   const status = useSelector(state => state.comments.status);
+  const error = useSelector(state => state.comments.error);
 
   const handleClick = ({target}) => {
     if (target === overlayRef.current) {
@@ -51,7 +53,7 @@ export const Modal = () => {
       <div className={style.overlay} ref={overlayRef}>
         <div className={style.modal}>
           {status === 'loading' && <PreLoader size={200}/>}
-          {status === 'error' && 'ERROR.....'}
+          {status === 'error' && `${error}`}
           {status === 'loaded' && (
             <>
               <h2 className={style.title}>{title}</h2>

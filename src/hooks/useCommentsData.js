@@ -5,7 +5,7 @@ import {
 } from '../store/comments/commentsAction';
 
 export const useCommentsData = (id) => {
-  const commentss = useSelector(state => state.comments.comments);
+  const comments = useSelector(state => state.comments);
 
   const dispatch = useDispatch();
 
@@ -13,7 +13,7 @@ export const useCommentsData = (id) => {
     dispatch(commentsRequestAsync(id));
   }, [id]);
 
-  return commentss;
+  return comments;
 };
 
 

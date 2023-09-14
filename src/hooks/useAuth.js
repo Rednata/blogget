@@ -3,7 +3,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {
   authRequestAsync,
   authRequestLogout,
-} from '../store/authReducer/authAction';
+} from '../store/auth/authAction';
 
 export const useAuth = () => {
   const auth = useSelector(state => state.auth.data);
