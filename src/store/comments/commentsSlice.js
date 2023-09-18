@@ -1,9 +1,8 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {commentsRequestAsync} from './commentsAction';
-// import {commentsRequestAsync} from './commentsAction';
 
-console.log(commentsRequestAsync.pending.type);
-console.log(commentsRequestAsync.fulfilled.type);
+// console.log(commentsRequestAsync.pending.type);
+// console.log(commentsRequestAsync.fulfilled.type);
 
 const initialState = {
   post: {},

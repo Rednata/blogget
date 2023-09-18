@@ -1,7 +1,7 @@
 import {tokenReducer, tokenMiddleWare} from './tokenReducer';
 import {commentReducer} from './commentReducer';
 import {authReducer} from './auth/authReducer';
-import {postsReducer} from './posts/postsReducer';
+import postsReducer from './posts/postsSlice';
 import commentsReducer from './comments/commentsSlice';
 import {configureStore} from '@reduxjs/toolkit';
 
@@ -10,7 +10,7 @@ export const store = configureStore({
     token: tokenReducer,
     comment: commentReducer,
     auth: authReducer,
-    postsData: postsReducer,
+    posts: postsReducer,
     comments: commentsReducer,
   },
   middleware: (getDefaultMiddleware) =>
