@@ -22,4 +22,3 @@ export const commentsRequestAsync = createAsyncThunk(
           .catch((error) => ({error: error.toString()}));
     },
 );
-

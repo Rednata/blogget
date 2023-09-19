@@ -2,7 +2,7 @@ import {URL_API} from '../../api/const';
 import axios from 'axios';
 import {postsSlice} from './postsSlice';
 
-export const postsRequestAsync = (newPage) => (dispatch, getState) => {
+export const postsRequestAsync1 = (newPage) => (dispatch, getState) => {
   let page = getState().posts.page;
 
   if (newPage) {
