@@ -17,18 +17,15 @@ export const List = props => {
   const {page} = useParams();
 
   useEffect(() => {
-    console.log('postsRequestAsync1');
-    console.warn('posts: ', posts);
+    console.log(page);
     dispatch(postsRequestAsync(page));
   }, [page]);
+
 
   useEffect(() => {
     if (!endList.current) return;
     const observer = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
-        console.log('postsRequestAsync2');
-        console.warn('posts: ', posts);
-        // console.log('page ', page);
         dispatch(postsRequestAsync());
       }
     }, {

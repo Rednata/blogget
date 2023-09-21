@@ -1,30 +1,27 @@
 import {URL_API} from '../../api/const';
 import axios from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
-
-const CHANGE_PAGE = 'CHANGE_PAGE';
-export const changePage = () => ({
-  type: CHANGE_PAGE,
-});
+import {postsSlice} from './postsSlice';
 
 export const postsRequestAsync = createAsyncThunk(
     'posts/fetch',
-    (newPage, {getState}) => {
+    (newPage, {getState, dispatch}) => {
+      console.log('newPage: ', newPage);
+
       let page = getState().posts.page;
       if (newPage) {
-        console.log('newPage ', newPage);
         page = newPage;
-        // dispatch(postsSlice.actions.changePage({page}));
+        dispatch(postsSlice.actions.changePage(page));
       }
-
-      console.log('page ', page);
 
       const token = getState().token.token;
       const after = getState().posts.after;
       const loading = getState().posts.loading;
       const isLast = getState().posts.isLast;
+      console.log('isLast: ', isLast);
+      console.log('loading: ', loading);
 
-      if (!token || loading || isLast) return;
+      // if (!token || loading || isLast) return;
 
       return axios(
           `${URL_API}/${page}?limit=5&${after ? `after=${after}` : ''}`, {
@@ -33,11 +30,11 @@ export const postsRequestAsync = createAsyncThunk(
             },
           })
           .then(({data}) => {
-            console.log(page);
             if (after) {
               const statePosts = getState().posts.posts;
               data.data.children = [...statePosts, ...data.data.children];
               data.data.countAfter = 1;
+              console.log(data.data);
               return (data.data);
             } else {
               data.data.countAfter = 0;

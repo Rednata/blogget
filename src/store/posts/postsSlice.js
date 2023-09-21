@@ -15,38 +15,17 @@ export const postsSlice = createSlice({
   name: 'posts',
   initialState,
   reducers: {
-    // postsRequest: (state) => {
-    //   state.loading = true;
-    // },
-    // postsRequestSuccess: (state, action) => {
-    //   state.loading = false;
-    //   state.posts = action.payload.children;
-    //   state.error = '';
-    //   state.after = action.payload.after;
-    //   state.isLast = !action.payload.after;
-    // },
-    // postsRequestSuccessAfter: (state, action) => {
-    //   state.loading = false;
-    //   state.posts = [...state.posts, ...action.payload.children];
-    //   state.error = '';
-    //   state.after = action.payload.after;
-    //   state.countAfter += 1;
-    // },
-    // postsRequestError: (state, action) => {
-    //   state.loading = false;
-    //   state.error = action.payload.error;
-    // },
-    // changePage: (state, action) => {
-    //   state.page = action.payload.page;
-    //   state.after = '';
-    //   state.isLast = false;
-    //   state.countAfter = 0;
-    // },
+    changePage: (state, action) => {
+      state.page = action.payload.page;
+      state.after = '';
+      state.isLast = false;
+      state.countAfter = 0;
+    },
   },
   extraReducers: {
     [postsRequestAsync.pending.type]: (state) => {
-      state.loading = false;
-      // state.loading = true;
+      // state.loading = false;
+      state.loading = true;
     },
     [postsRequestAsync.fulfilled.type]: (state, action) => {
       state.loading = false;
@@ -58,7 +37,7 @@ export const postsSlice = createSlice({
     },
     [postsRequestAsync.rejected.type]: (state, action) => {
       state.status = 'error';
-      state.error = action.payload.error;
+      // state.error = action.payload.error;
     },
   },
 });
