@@ -4,11 +4,12 @@ import Post from './Post';
 import PreLoader from '../../../UI/PreLoader';
 import {useRef, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {postsRequestAsync} from '../../../store/posts/postsSlice';
+import {postsRequestAsync} from '../../../store/posts/postsAction';
 import {Outlet, useParams} from 'react-router-dom';
 
 export const List = props => {
   const countAfter = useSelector(state => state.posts.countAfter);
+
   const posts = useSelector(state => state.posts.posts);
 
   const endList = useRef(null);
@@ -16,6 +17,8 @@ export const List = props => {
   const {page} = useParams();
 
   useEffect(() => {
+    console.log('postsRequestAsync1');
+    console.warn('posts: ', posts);
     dispatch(postsRequestAsync(page));
   }, [page]);
 
@@ -23,6 +26,9 @@ export const List = props => {
     if (!endList.current) return;
     const observer = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
+        console.log('postsRequestAsync2');
+        console.warn('posts: ', posts);
+        // console.log('page ', page);
         dispatch(postsRequestAsync());
       }
     }, {

@@ -1,10 +1,6 @@
-// import {
-//   POSTS_REQUEST,
-//   POSTS_REQUEST_SUCCESS,
-//   POSTS_REQUEST_SUCCESS_AFTER,
-//   POSTS_REQUEST_ERROR,
-//   CHANGE_PAGE,
-// } from './postsAction';
+import {
+  CHANGE_PAGE,
+} from './postsAction';
 
 // const initialState = {
 //   loading: false,
@@ -15,6 +11,21 @@
 //   page: '',
 //   countAfter: 0,
 // };
+
+const initialState = {
+  posts: [],
+  page: '',
+};
+
+export const changePostsReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case CHANGE_PAGE:
+      return {
+        ...state,
+        page: action.page,
+      };
+  }
+};
 
 // export const postsReducer = (state = initialState, action) => {
 //   switch (action.type) {

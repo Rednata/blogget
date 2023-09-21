@@ -1,50 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {URL_API} from '../../api/const';
-import axios from 'axios';
-import {createAsyncThunk} from '@reduxjs/toolkit';
-
-export const postsRequestAsync = createAsyncThunk(
-    'posts/fetch',
-    (newPage, {getState}) => {
-      let page = getState().posts.page;
-
-      if (newPage) {
-        console.log('NEWWW');
-        page = newPage;
-        // dispatch(postsSlice.actions.changePage({page}));
-      }
-
-      const token = getState().token.token;
-      const after = getState().posts.after;
-      const loading = getState().posts.loading;
-      const isLast = getState().posts.isLast;
-
-      if (!token || loading || isLast) return;
-      // dispatch(postsSlice.actions.postsRequest());
-
-      return axios(
-          `${URL_API}/${page}?limit=5&${after ? `after=${after}` : ''}`, {
-            headers: {
-              Authorization: `bearer ${token}`,
-            },
-          })
-          .then(({data}) => {
-            console.log(after);
-            // if (after) {
-            //   console.log(data);
-            //   const statePosts = getState().posts.posts;
-            //   console.log('statePosts: ', statePosts);
-            //   return statePosts;
-
-            // dispatch(postsSlice.actions.postsRequestSuccessAfter(data.data));
-            // } else {
-            console.log(data.data);
-            return (data.data);
-            // }
-          })
-          .catch((error) => ({error: error.toString()}));
-    },
-);
+import {postsRequestAsync} from './postsAction';
 
 const initialState = {
   loading: false,
@@ -52,7 +7,7 @@ const initialState = {
   error: '',
   after: '',
   isLast: false,
-  page: 'best',
+  page: '',
   countAfter: 0,
 };
 
@@ -99,6 +54,7 @@ export const postsSlice = createSlice({
       state.error = '';
       state.after = action.payload.after;
       state.isLast = !action.payload.after;
+      state.countAfter += action.payload.countAfter;
     },
     [postsRequestAsync.rejected.type]: (state, action) => {
       state.status = 'error';
@@ -106,41 +62,5 @@ export const postsSlice = createSlice({
     },
   },
 });
-
-// Прежняя функция postsRequestAsync на диспатчах;
-export function postsRequestAsync1(newPage) {
-  return (dispatch, getState) => {
-    let page = getState().posts.page;
-
-    if (newPage) {
-      page = newPage;
-      dispatch(postsSlice.actions.changePage({page}));
-    }
-
-    const token = getState().token.token;
-    const after = getState().posts.after;
-    const loading = getState().posts.loading;
-    const isLast = getState().posts.isLast;
-
-    if (!token || loading || isLast) return;
-    dispatch(postsSlice.actions.postsRequest());
-
-    axios(`${URL_API}/${page}?limit=5&${after ? `after=${after}` : ''}`, {
-      headers: {
-        Authorization: `bearer ${token}`,
-      },
-    })
-        .then(({data}) => {
-          if (after) {
-            dispatch(postsSlice.actions.postsRequestSuccessAfter(data.data));
-          } else {
-            dispatch(postsSlice.actions.postsRequestSuccess(data.data));
-          }
-        })
-        .catch((error) => {
-          dispatch(postsSlice.actions.postsRequestError(error));
-        });
-  };
-}
 
 export default postsSlice.reducer;
