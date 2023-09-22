@@ -8,7 +8,7 @@ const initialState = {
   after: '',
   isLast: false,
   page: '',
-  countAfter: 0,
+  countAfter: -2,
 };
 
 export const postsSlice = createSlice({
@@ -19,25 +19,31 @@ export const postsSlice = createSlice({
       state.page = action.payload.page;
       state.after = null;
       state.isLast = false;
-      state.countAfter = 0;
+      state.countAfter = -2;
     },
   },
   extraReducers: {
     [postsRequestAsync.pending.type]: (state) => {
-      // state.loading = false;
       state.loading = true;
     },
     [postsRequestAsync.fulfilled.type]: (state, action) => {
-      state.loading = false;
-      state.posts = action.payload.children;
-      state.error = '';
-      state.after = action.payload.after;
-      state.isLast = !action.payload.after;
-      state.countAfter += action.payload.countAfter;
+      if (action.payload) {
+        state.posts = action.payload.children;
+        state.after = action.payload.after;
+        state.isLast = !action.payload.after;
+        state.loading = false;
+        state.error = '';
+        state.countAfter += 1;
+      } else {
+        state.loading = false;
+        state.after = '';
+        state.isLast = true;
+        state.error = '';
+      }
     },
     [postsRequestAsync.rejected.type]: (state, action) => {
       state.status = 'error';
-      // state.error = action.payload.error;
+      state.error = action.payload.error;
     },
   },
 });

@@ -7,11 +7,15 @@ export const postsRequestAsync = createAsyncThunk(
     'posts/fetch',
     (temp, {getState}) => {
       const page = getState().posts.page;
+      const posts = getState().posts.posts;
       const token = getState().token.token;
       const after = getState().posts.after;
       const loading = getState().posts.loading;
       const isLast = getState().posts.isLast;
 
+      console.log('loading: ', loading);
+
+      if (!token || isLast) return;
       // if (!token || loading || isLast) return;
 
       return axios(
@@ -24,10 +28,8 @@ export const postsRequestAsync = createAsyncThunk(
             if (after) {
               const statePosts = getState().posts.posts;
               data.data.children = [...statePosts, ...data.data.children];
-              data.data.countAfter = 1;
               return (data.data);
             } else {
-              data.data.countAfter = 0;
               return (data.data);
             }
           })
@@ -37,36 +39,3 @@ export const postsRequestAsync = createAsyncThunk(
           });
     },
 );
-
-// export const postsRequestAsync1 = (newPage) => (dispatch, getState) => {
-//   let page = getState().posts.page;
-
-//   if (newPage) {
-//     page = newPage;
-//     dispatch(postsSlice.actions.changePage({page}));
-//   }
-
-//   const token = getState().token.token;
-//   const after = getState().posts.after;
-//   const loading = getState().posts.loading;
-//   const isLast = getState().posts.isLast;
-
-//   if (!token || loading || isLast) return;
-//   dispatch(postsSlice.actions.postsRequest());
-
-//   axios(`${URL_API}/${page}?limit=5&${after ? `after=${after}` : ''}`, {
-//     headers: {
-//       Authorization: `bearer ${token}`,
-//     },
-//   })
-//       .then(({data}) => {
-//         if (after) {
-//           dispatch(postsSlice.actions.postsRequestSuccessAfter(data.data));
-//         } else {
-//           dispatch(postsSlice.actions.postsRequestSuccess(data.data));
-//         }
-//       })
-//       .catch((error) => {
-//         dispatch(postsSlice.actions.postsRequestError(error));
-//       });
-// };
