@@ -17,7 +17,7 @@ export const postsSlice = createSlice({
   reducers: {
     changePage: (state, action) => {
       state.page = action.payload.page;
-      state.after = '';
+      state.after = null;
       state.isLast = false;
       state.countAfter = 0;
     },

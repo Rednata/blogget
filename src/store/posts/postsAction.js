@@ -1,25 +1,16 @@
+/* eslint-disable no-unused-vars */
 import {URL_API} from '../../api/const';
 import axios from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {postsSlice} from './postsSlice';
 
 export const postsRequestAsync = createAsyncThunk(
     'posts/fetch',
-    (newPage, {getState, dispatch}) => {
-      console.log('newPage: ', newPage);
-
-      let page = getState().posts.page;
-      if (newPage) {
-        page = newPage;
-        dispatch(postsSlice.actions.changePage(page));
-      }
-
+    (temp, {getState}) => {
+      const page = getState().posts.page;
       const token = getState().token.token;
       const after = getState().posts.after;
       const loading = getState().posts.loading;
       const isLast = getState().posts.isLast;
-      console.log('isLast: ', isLast);
-      console.log('loading: ', loading);
 
       // if (!token || loading || isLast) return;
 
@@ -34,15 +25,16 @@ export const postsRequestAsync = createAsyncThunk(
               const statePosts = getState().posts.posts;
               data.data.children = [...statePosts, ...data.data.children];
               data.data.countAfter = 1;
-              console.log(data.data);
               return (data.data);
             } else {
               data.data.countAfter = 0;
-              console.log(data.data);
               return (data.data);
             }
           })
-          .catch((error) => ({error: error.toString()}));
+          .catch((error) => {
+            console.warn(error);
+            ({error: error.toString()});
+          });
     },
 );
 

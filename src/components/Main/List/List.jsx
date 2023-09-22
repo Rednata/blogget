@@ -6,6 +6,7 @@ import {useRef, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {postsRequestAsync} from '../../../store/posts/postsAction';
 import {Outlet, useParams} from 'react-router-dom';
+import {postsSlice} from '../../../store/posts/postsSlice';
 
 export const List = props => {
   const countAfter = useSelector(state => state.posts.countAfter);
@@ -17,10 +18,12 @@ export const List = props => {
   const {page} = useParams();
 
   useEffect(() => {
-    console.log(page);
-    dispatch(postsRequestAsync(page));
+    dispatch(postsSlice.actions.changePage({page}));
   }, [page]);
 
+  useEffect(() => {
+    dispatch(postsRequestAsync());
+  }, [page]);
 
   useEffect(() => {
     if (!endList.current) return;
@@ -37,7 +40,6 @@ export const List = props => {
       if (endList.current) {
         observer.unobserve(endList.current);
       }
-      // };
     };
   }, [endList.current]);
 
@@ -45,13 +47,13 @@ export const List = props => {
     <>
       <ul className={style.list}>
         {
-          posts.length >= 1 ?
+          posts.length > 0 ?
             posts.map(({data}) =>
               <Post key={data.id} data={data} />) :
           <PreLoader size={250}/>
         }
       </ul>
-      {countAfter < 2 ?
+      {countAfter < 1 ?
           <li ref={endList} className={style.end}/> :
             <button
               className={style.btnMore}
