@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 import Time from '../../Main/List/Post/Time';
 // import Markdown from 'markdown-to-jsx';
 
-export const Comments = ({postComments}) => {
+export const Comments = ({comments}) => {
   console.log();
 
-  if (postComments) {
+  if (comments) {
     return (
-      postComments.length <= 1 ?
+      comments.length <= 1 ?
       <p>No comments</p> :
       <ul className={style.list}>
         {
-          postComments.map((comment, i) => {
+          comments.map((comment, i) => {
             const {author, body, created} = comment.data;
 
             return (
@@ -54,6 +54,6 @@ export const Comments = ({postComments}) => {
 };
 
 Comments.propTypes = {
-  postComments: PropTypes.array,
+  comments: PropTypes.array,
 };
 

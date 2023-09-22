@@ -15,12 +15,14 @@ import {useNavigate, useParams} from 'react-router-dom';
 export const Modal = () => {
   const {id, page} = useParams();
   const navigate = useNavigate();
-  console.log(id);
-  console.log(123);
+
   const overlayRef = useRef(null);
 
-  const [author, title, postComments] = useCommentsData(id);
-  const status = useSelector(state => state.postComments.status);
+  const {post, comments} = useCommentsData(id);
+  const {author, title} = post;
+
+  const status = useSelector(state => state.comments.status);
+  const error = useSelector(state => state.comments.error);
 
   const handleClick = ({target}) => {
     if (target === overlayRef.current) {
@@ -51,7 +53,7 @@ export const Modal = () => {
       <div className={style.overlay} ref={overlayRef}>
         <div className={style.modal}>
           {status === 'loading' && <PreLoader size={200}/>}
-          {status === 'error' && 'ERROR.....'}
+          {status === 'error' && `${error}`}
           {status === 'loaded' && (
             <>
               <h2 className={style.title}>{title}</h2>
@@ -71,7 +73,7 @@ export const Modal = () => {
               <p className={style.author}>{author}</p>
 
               <FormComment />
-              <Comments postComments={postComments} />
+              <Comments comments={comments} />
             </>
           )}
 
