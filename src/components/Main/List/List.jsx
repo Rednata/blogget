@@ -16,20 +16,25 @@ export const List = props => {
   const endList = useRef(null);
   const dispatch = useDispatch();
   const {page} = useParams();
+  const pageState = useSelector(state => state.posts.page);
+
+  const changeLoading = () => {
+    dispatch(postsSlice.actions.changeLoading());
+  };
 
   useEffect(() => {
     dispatch(postsSlice.actions.changePage({page}));
   }, [page]);
 
   useEffect(() => {
-    dispatch(postsRequestAsync());
-  }, [page]);
+    dispatch(postsRequestAsync(changeLoading));
+  }, [pageState]);
 
   useEffect(() => {
     if (!endList.current) return;
     const observer = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
-        dispatch(postsRequestAsync());
+        dispatch(postsRequestAsync(changeLoading));
       }
     }, {
       rootMargin: '100px',
@@ -57,7 +62,7 @@ export const List = props => {
           <li ref={endList} className={style.end}/> :
             <button
               className={style.btnMore}
-              onClick={() => dispatch(postsRequestAsync())}
+              onClick={() => dispatch(postsRequestAsync(changeLoading))}
             >Загрузить еще...</button>
       }
       <Outlet />

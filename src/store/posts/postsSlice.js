@@ -21,10 +21,12 @@ export const postsSlice = createSlice({
       state.isLast = false;
       state.countAfter = -2;
     },
+    changeLoading: (state) => {
+      state.loading = true;
+    },
   },
   extraReducers: {
     [postsRequestAsync.pending.type]: (state) => {
-      state.loading = true;
     },
     [postsRequestAsync.fulfilled.type]: (state, action) => {
       if (action.payload) {
