@@ -5,18 +5,15 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 
 export const postsRequestAsync = createAsyncThunk(
     'posts/fetch',
-    (temp, {getState}) => {
+    (changeLoading, {getState}) => {
       const page = getState().posts.page;
-      const posts = getState().posts.posts;
       const token = getState().token.token;
       const after = getState().posts.after;
       const loading = getState().posts.loading;
       const isLast = getState().posts.isLast;
 
-      console.log('loading: ', loading);
-
-      if (!token || isLast) return;
-      // if (!token || loading || isLast) return;
+      if (!token || loading || isLast) return;
+      changeLoading();
 
       return axios(
           `${URL_API}/${page}?limit=5&${after ? `after=${after}` : ''}`, {
